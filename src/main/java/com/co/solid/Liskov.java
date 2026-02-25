@@ -1,4 +1,4 @@
-package com.co.solid;
+ackage com.co.solid;
 
 /**
  * Sistema de empleados en app de domicilios
@@ -61,51 +61,106 @@ class Main {
 }
 
 /**
- * Principio de Liskov - Después de la aplicación
+ *///////////////////////////////////// Principio de Liskov - Después de la aplicación
  */
 
-interface EmpleadoI {
-    void reportarHorasTrabajadas();
+abstract class Empleado {
+
+    public abstract void reportarHorasTrabajadas();
 }
 
-interface EmpleadoAdministrativoI  extends EmpleadoI {
-    void generarReporte();
-}
-
-class Admin implements EmpleadoAdministrativoI  {
+class Administrador extends Empleado {
 
     @Override
     public void reportarHorasTrabajadas() {
         System.out.println("Reportando horas trabajadas del administrador...");
     }
 
-    @Override
-    public void generarReporte() {
+    public void generarReporteFinanciero() {
         System.out.println("Generando reporte financiero del sistema...");
     }
 }
 
-class Domiciliarioo implements EmpleadoI {
+class Domiciliario extends Empleado {
 
     @Override
     public void reportarHorasTrabajadas() {
-        System.out.println("Reportando horas trabajadas del administrador...");
+        System.out.println("Reportando horas trabajadas del domiciliario...");
     }
-
 }
-
-/**
- * Cumplimiento de liskov
- */
 class Main {
 
     public static void main(String[] args) {
 
-        EmpleadoAdministrativoI admin = new Admin();
+        Empleado admin = new Administrador();
         admin.reportarHorasTrabajadas();
-        admin.generarReporte();
 
-        EmpleadoI domi = new Domiciliarioo();
+        Empleado domi = new Domiciliario();
         domi.reportarHorasTrabajadas();
     }
 }
+
+
+//////////////////////////////////////////////combinacion liskov e isp/////////////////////////////////////////////
+
+// ISP: interfaz base pequeña
+interface EmpleadoI {
+    void reportarHorasTrabajadas();
+}
+// ISP: interfaz especializada
+interface EmpleadoAdministrativoI extends EmpleadoI {
+    void generarReporte();
+}
+// Clase base opcional para comportamiento común 
+abstract class EmpleadoBase implements EmpleadoI {
+
+    protected String nombre;
+
+    public EmpleadoBase(String nombre) {
+        this.nombre = nombre;
+    }
+}
+// Administrador cumple completamente su contrato
+class Admin extends EmpleadoBase implements EmpleadoAdministrativoI {
+
+    public Admin(String nombre) {
+        super(nombre);
+    }
+
+    @Override
+    public void reportarHorasTrabajadas() {
+        System.out.println(nombre + " reporta horas como administrador.");
+    }
+
+    @Override
+    public void generarReporte() {
+        System.out.println(nombre + " genera reporte financiero.");
+    }
+}
+// Domiciliario solo implementa lo que realmente puede hacer
+class Domiciliario extends EmpleadoBase {
+
+    public Domiciliario(String nombre) {
+        super(nombre);
+    }
+
+    @Override
+    public void reportarHorasTrabajadas() {
+        System.out.println(nombre + " reporta horas como domiciliario.");
+    }
+}
+class Main {
+
+    public static void main(String[] args) {
+
+        EmpleadoAdministrativoI admin = new Admin("Carlos");
+        admin.reportarHorasTrabajadas();
+        admin.generarReporte();
+
+        EmpleadoI domi = new Domiciliario("Luis");
+        domi.reportarHorasTrabajadas();
+    }
+}
+
+
+
