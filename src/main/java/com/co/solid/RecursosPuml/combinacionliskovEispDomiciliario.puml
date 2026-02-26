@@ -1,0 +1,60 @@
+@startuml
+package "com.co.solid" {
+
+    interface EmpleadoI {
+        +reportarHorasTrabajadas()
+    }
+
+    interface EmpleadoAdministrativoI {
+        +generarReporte()
+    }
+
+    abstract class EmpleadoBase {
+        #nombre : String
+        +EmpleadoBase(nombre : String)
+    }
+
+    class Admin {
+        +Admin(nombre : String)
+        +reportarHorasTrabajadas()
+        +generarReporte()
+    }
+
+    class Domiciliario {
+        +Domiciliario(nombre : String)
+        +reportarHorasTrabajadas()
+    }
+
+    class Main {
+        +main(args : String[])
+    }
+
+    EmpleadoI <|-- EmpleadoAdministrativoI
+    EmpleadoI <|.. EmpleadoBase
+    EmpleadoBase <|-- Admin
+    EmpleadoBase <|-- Domiciliario
+    EmpleadoAdministrativoI <|.. Admin
+}
+
+note right of EmpleadoI
+    ISP:
+    Interfaz pequeña y específica
+end note
+
+note right of EmpleadoAdministrativoI
+    ISP:
+    Interfaz especializada
+    para funciones administrativas
+end note
+
+note right of Admin
+    Cumple completamente
+    su contrato (LSP)
+end note
+
+note right of Domiciliario
+    Solo implementa lo que
+    realmente necesita (ISP)
+end note
+
+@enduml

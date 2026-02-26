@@ -1,0 +1,57 @@
+@startuml
+package "Sistema Empleados - Con ISP" {
+
+    interface TomadorPedidoI {
+        +tomarPedido()
+    }
+
+    interface CocineroI {
+        +cocinar()
+    }
+
+    interface RepartidorI {
+        +entregarPedido()
+    }
+
+    interface ReportadorI {
+        +generarReporte()
+    }
+
+    class Cocinero {
+        +cocinar()
+    }
+
+    class Domiciliario {
+        +entregarPedido()
+    }
+
+    class Administrador {
+        +generarReporte()
+    }
+
+    CocineroI <|.. Cocinero
+    RepartidorI <|.. Domiciliario
+    ReportadorI <|.. Administrador
+}
+
+note right of TomadorPedidoI
+    Interfaces pequeñas
+    y específicas.
+end note
+
+note right of Cocinero
+    Implementa solo
+    lo que necesita.
+end note
+
+note right of Domiciliario
+    No depende de métodos
+    innecesarios.
+end note
+
+note right of Administrador
+    Responsabilidad clara
+    y separada.
+end note
+
+@enduml

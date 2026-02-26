@@ -1,0 +1,36 @@
+@startuml
+package "com.co.solid" {
+
+    abstract class Empleado {
+        +reportarHorasTrabajadas()
+    }
+
+    class Administrador {
+        +reportarHorasTrabajadas()
+        +generarReporteFinanciero()
+    }
+
+    class Domiciliario {
+        +reportarHorasTrabajadas()
+    }
+
+    class Main {
+        +main(args : String[])
+    }
+
+    Empleado <|-- Administrador
+    Empleado <|-- Domiciliario
+}
+
+note right of Empleado
+    Ahora el contrato es correcto.
+    Solo define el comportamiento
+    común a todos los empleados.
+end note
+
+note right of Administrador
+    Funcionalidad específica
+    sin afectar a otras clases.
+end note
+
+@enduml

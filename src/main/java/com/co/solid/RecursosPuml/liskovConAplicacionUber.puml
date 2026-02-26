@@ -1,0 +1,47 @@
+@startuml
+package "Aplicacion Uber - Con LSP" {
+
+    abstract class Vehiculo {
+        +aceptarViaje()
+        +iniciarViaje()
+        +finalizarViaje()
+    }
+
+    class UberCarro {
+        +aceptarViaje()
+        +iniciarViaje()
+        +finalizarViaje()
+        +transportar4Pasajeros()
+    }
+
+    class UberMoto {
+        +aceptarViaje()
+        +iniciarViaje()
+        +finalizarViaje()
+        +transportar1Pasajeros()
+    }
+
+    class "procesarViaje()" as ProcesarViaje
+
+    Vehiculo <|-- UberCarro
+    Vehiculo <|-- UberMoto
+    ProcesarViaje ..> Vehiculo : usa
+}
+
+note right of Vehiculo
+    El contrato contiene solo
+    comportamiento común
+    a todos los vehículos.
+end note
+
+note right of UberCarro
+    Método específico
+    sin afectar el contrato base.
+end note
+
+note right of UberMoto
+    Método específico
+    sin romper sustitución.
+end note
+
+@enduml

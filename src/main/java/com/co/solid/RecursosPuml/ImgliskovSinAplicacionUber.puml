@@ -1,0 +1,51 @@
+@startuml
+package "Aplicacion Uber - Sin LSP" {
+
+    abstract class Vehiculo {
+        +aceptarViaje()
+        +iniciarViaje()
+        +finalizarViaje()
+        +transportar4Pasajeros()
+    }
+
+    class UberMoto {
+        +aceptarViaje()
+        +iniciarViaje()
+        +finalizarViaje()
+        +transportar4Pasajeros()
+    }
+
+    class UberCarro {
+        +aceptarViaje()
+        +iniciarViaje()
+        +finalizarViaje()
+        +transportar4Pasajeros()
+    }
+
+    class "iniciarServicio()" as IniciarServicio
+
+    Vehiculo <|-- UberMoto
+    Vehiculo <|-- UberCarro
+    IniciarServicio ..> Vehiculo : usa
+}
+
+note right of Vehiculo
+    El contrato obliga a todos
+    los vehículos a transportar
+    4 pasajeros.
+end note
+
+note right of UberMoto
+    ❌ Violación de LSP
+    transportar4Pasajeros()
+    lanza Exception.
+    No cumple el contrato
+    definido por Vehiculo.
+end note
+
+note bottom of IniciarServicio
+    Si recibe UberMoto,
+    el sistema falla.
+end note
+
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+package "com.co.solid" {
+
+    class Empleado {
+        +reportarHorasTrabajadas()
+        +generarReporte()
+    }
+
+    class Administrador {
+        +reportarHorasTrabajadas()
+        +generarReporte()
+    }
+
+    class Domiciliario {
+        +reportarHorasTrabajadas()
+        +generarReporte()
+    }
+
+    class Main {
+        +main(args : String[])
+    }
+
+    Empleado <|-- Administrador
+    Empleado <|-- Domiciliario
+}
+
+note right of Domiciliario
+    Violación de LSP:
+    generarReporte() lanza
+    UnsupportedOperationException
+end note
+
+@enduml

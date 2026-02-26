@@ -1,0 +1,47 @@
+@startuml
+package "Aplicacion Carros - Con LSP" {
+
+    abstract class Carro {
+        +encender()
+        +acelerar()
+        +frenar()
+    }
+
+    class CarroGasolina {
+        +encender()
+        +acelerar()
+        +frenar()
+        +tanquearGasolina()
+    }
+
+    class CarroElectrico {
+        +encender()
+        +acelerar()
+        +frenar()
+        +cargarBateria()
+    }
+
+    class "probarCarro()" as ProbarCarro
+
+    Carro <|-- CarroGasolina
+    Carro <|-- CarroElectrico
+    ProbarCarro ..> Carro : usa
+}
+
+note right of Carro
+    El contrato solo define
+    comportamientos comunes
+    a todos los carros.
+end note
+
+note right of CarroGasolina
+    Métodos específicos
+    sin afectar el contrato base.
+end note
+
+note right of CarroElectrico
+    Métodos específicos
+    sin romper sustitución.
+end note
+
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+package "Aplicacion Carros - Sin LSP" {
+
+    abstract class Carro {
+        +encender()
+        +acelerar()
+        +frenar()
+        +cargarBateria()
+    }
+
+    class CarroGasolina {
+        +encender()
+        +acelerar()
+        +frenar()
+        +cargarBateria()
+    }
+
+    class CarroElectrico {
+        +encender()
+        +acelerar()
+        +frenar()
+        +cargarBateria()
+    }
+
+    class "probarCarro()" as ProbarCarro
+
+    Carro <|-- CarroGasolina
+    Carro <|-- CarroElectrico
+    ProbarCarro ..> Carro : usa
+}
+
+note right of CarroGasolina
+    ❌ Violación de LSP
+    cargarBateria() lanza Exception
+    No cumple el contrato del padre
+end note
+
+note right of Carro
+    El método cargarBateria()
+    obliga a todas las subclases
+    aunque no aplique para todas.
+end note
+
+@enduml

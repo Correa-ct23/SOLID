@@ -1,0 +1,34 @@
+@startuml
+package "Sistema Empleados - Sin ISP" {
+
+    interface EmpleadoI {
+        +tomarPedido()
+        +cocinar()
+        +entregarPedido()
+        +generarReporte()
+    }
+
+    class Cocinero {
+        +tomarPedido()
+        +cocinar()
+        +entregarPedido()
+        +generarReporte()
+    }
+
+    EmpleadoI <|.. Cocinero
+}
+
+note right of EmpleadoI
+    ❌ Interfaz "gorda"
+    Obliga a implementar
+    métodos que no aplican
+    a todos los empleados.
+end note
+
+note right of Cocinero
+    Violación de ISP:
+    Lanza UnsupportedOperationException
+    en métodos que no usa.
+end note
+
+@enduml
